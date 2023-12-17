@@ -42,7 +42,6 @@
         const floatingInput = document.querySelector("#floatingInput")
 
         floatingInput.addEventListener("keyup", e => {
-            console.log(e.target.value)
             form.style.display = (e.target.value.length > 0) ? "" : "none"
             author.value = e.target.value
         })
