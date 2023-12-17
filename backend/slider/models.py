@@ -23,7 +23,7 @@ class Picture(TimeStampedModel):
                 buffer = BytesIO()
                 img.save(buffer, format='WEBP')
                 self.file.save(
-                    f"{self.file.name.split('.')[0]}.webp",
+                    f"{os.path.splitext(self.file.name)[0]}.webp",
                     ContentFile(buffer.getvalue()),
                     save=False
                 )
