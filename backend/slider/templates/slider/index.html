@@ -11,24 +11,23 @@
 
 {% block content %}
 
-    <h3>Upload images</h3>
+    <p>Your name in the field below is required to enable uploading.
+        It will be visible in the picture slideshow.</p>
 
     <div class="form-floating mb-3">
         <input type="email" class="form-control" id="floatingInput" autocomplete="off"
                placeholder="Author of images">
         <label for="floatingInput">Author of images</label>
-        <div class="form-text">
-            Required. Your name will be shown with the pictures.
-        </div>
     </div>
 
     <form id="dropzone" action="{% url 'slider:index' %}" method="post" class="dropzone" enctype="multipart/form-data"
           style="display: none">
         {{ form.author }}
         {% csrf_token %}
+        <h5 class="dz-message" style="color: #567">Drop pictures here.<br/>Or click to choose from device.</h5>
     </form>
 
-    <div class="fixed-bottom mb-2 ms-4">
+    <div class="fixed-bottom mb-2 me-4 text-end">
         <a href="https://github.com/T-101/slider">Github</a>
     </div>
 
