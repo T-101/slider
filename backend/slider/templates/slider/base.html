@@ -1,0 +1,46 @@
+<!DOCTYPE html>{% load static %}{% load i18n %}{% load plausible %}
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}
+        <title>Sami "Reward" Vanhatalo</title>
+        <meta property="og:title" content='Sami "Reward" Vanhatalo'/>
+    {% endblock %}
+    <meta property="og:description" content='Sami "Reward" Vanhatalo'/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"
+            integrity="sha512-X/YkDZyjTf4wyc2Vy16YGCPHwAY8rZJY+POgokZjQB2mhIRFJCckEGc6YyX9eNsPfn0PzThEuNs+uaomE5CO6A=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css"
+          integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+    {% block extrahead %}
+    {% endblock %}
+
+</head>
+<body>
+
+<nav class="navbar navbar-custom navbar-expand-md navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'slider:index' %}">
+            Sami "Reward" Vanhatalo
+        </a>
+
+
+    </div>
+
+</nav>
+
+<div class="container mt-4">
+    {% block content %}
+    {% endblock %}
+</div>
+
+
+{% plausible %}
+
+</body>
+
+</html>

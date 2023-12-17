@@ -1,0 +1,96 @@
+<!DOCTYPE html>{% load static %}{% load i18n %}{% load plausible %}
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}
+        <title>Sami "Reward" Vanhatalo</title>
+        <meta property="og:title" content='Sami "Reward" Vanhatalo'/>
+    {% endblock %}
+    <meta property="og:description" content='Sami "Reward" Vanhatalo'/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.2/reveal.min.js"
+            integrity="sha512-w7pY1wL5qhcH40XK9PIRYZc/qeog8TdyxRqEA9eHKBz+/tnhAOyIFHivbmJd/ezr8xbB7iVAh4tBNiJakCTw2g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.2/reveal.min.css"
+          integrity="sha512-8849oiyeHKp8wdWclFreBguH6cXFoZfHhVBcoxdm+2+JcXagu1Poobm5vzBqEZqL9iJbTYK1bXbx3SWfNA3kRQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.2/theme/blood.min.css"
+          integrity="sha512-dbf3UHwIYeKButfMjZiDxTTBsma6tg91R0EbdqMzHOm7nC9r7xTiZabuf0o7UlHwBuaoImwvt2n/Yfz+I3ql/w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+    {% block extrahead %}
+    {% endblock %}
+
+</head>
+
+<style>
+    body {
+        background-color: #123;
+    }
+
+</style>
+<body>
+
+
+<div class="reveal">
+    <div id="slides" class="slides">
+    </div>
+</div>
+
+
+<script>
+    const slides = document.querySelector("#slides")
+
+    function getPictures() {
+        $.ajax({
+            type: "GET",
+            url: "{% url 'picture-list' %}",
+            success: refreshPictures
+        })
+    }
+
+
+    function refreshPictures(res) {
+        slides.innerHTML = ""
+        res.forEach(obj => {
+            const section = document.createElement("section")
+            section.dataset.background = obj.file
+            section.dataset.backgroundSize = "contain"
+            section.dataset.backgroundColor = "#123"
+            section.dataset.transition = "fade"
+            section.dataset.transitionSpeed = "slow"
+            const text = document.createTextNode(obj.author)
+            // section.appendChild(text)
+            slides.appendChild(section)
+        })
+
+        if (Reveal.getState !== undefined) Reveal.sync()
+
+        if (Reveal.getState === undefined) {
+            Reveal.initialize({
+                hash: true,
+                controls: false,
+                progress: true,
+                autoSlide: 5000,
+                loop: true
+            })
+            Reveal.on('slidetransitionend', event => {
+                if (Reveal.getProgress() === 0) getPictures()
+            })
+        }
+
+    }
+
+    getPictures()
+
+
+</script>
+
+</body>
+</html>

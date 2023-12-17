@@ -1,0 +1,44 @@
+{% extends 'slider/base.html' %}
+
+{% block extrahead %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"
+            integrity="sha512-U2WE1ktpMTuRBPoCFDzomoIorbOyUv0sP8B+INA3EzNAhehbzED1rOJg6bCqPf/Tuposxb5ja/MAUnC8THSbLQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css"
+          integrity="sha512-jU/7UFiaW5UBGODEopEqnbIAHOI8fO6T99m7Tsmqs2gkdujByJfkCbbfPSN4Wlqlb9TGnsuC0YgUgWkRBK7B9A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+{% endblock %}
+
+{% block content %}
+
+    <h3>Upload images</h3>
+
+    <div class="form-floating mb-3">
+        <input type="email" class="form-control" id="floatingInput" autocomplete="off"
+               placeholder="Author of images">
+        <label for="floatingInput">Author of images</label>
+    </div>
+
+    <form action="{% url 'slider:index' %}" method="post" class="dropzone" enctype="multipart/form-data"
+          style="display: none">
+        {{ form.author }}
+        {% comment %}<input type="hidden" name="author" maxlength="255" required="" id="id_author">{% endcomment %}
+        {% csrf_token %}
+
+    </form>
+
+    <script>
+        const form = document.querySelector("form")
+        const author = document.querySelector("#id_author")
+        const floatingInput = document.querySelector("#floatingInput")
+
+        floatingInput.addEventListener("keyup", e => {
+            console.log(e.target.value)
+            form.style.display = (e.target.value.length > 0) ? "" : "none"
+            author.value = e.target.value
+        })
+
+    </script>
+
+{% endblock %}
+

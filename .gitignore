@@ -1,0 +1,10 @@
+.idea/
+.env
+backend/.env
+backend/db.sqlite3
+backend/media/
+backend/static/
+*.pyc
+*.json
+
+docker-compose.override.yml
