@@ -17,6 +17,9 @@
         <input type="email" class="form-control" id="floatingInput" autocomplete="off"
                placeholder="Author of images">
         <label for="floatingInput">Author of images</label>
+        <div class="form-text">
+            Required. Your name will be shown with the pictures.
+        </div>
     </div>
 
     <form id="dropzone" action="{% url 'slider:index' %}" method="post" class="dropzone" enctype="multipart/form-data"
