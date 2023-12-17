@@ -11,21 +11,25 @@
 
 {% block content %}
 
-    <p>Your name in the field below is required to enable uploading.
-        It will be visible in the picture slideshow.</p>
+    <div class="row justify-content-center">
+        <div class="col" style="max-width: 500px">
+            <p>Your name in the field below is required to enable uploading.
+                It will be visible in the picture slideshow.</p>
 
-    <div class="form-floating mb-3">
-        <input type="email" class="form-control" id="floatingInput" autocomplete="off"
-               placeholder="Author of images">
-        <label for="floatingInput">Author of images</label>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInput" autocomplete="off"
+                       placeholder="Author of images">
+                <label for="floatingInput">Author of images</label>
+            </div>
+
+            <form id="dropzone" action="{% url 'slider:index' %}" method="post" class="dropzone"
+                  enctype="multipart/form-data" style="display: none">
+                {{ form.author }}
+                {% csrf_token %}
+                <h5 class="dz-message" style="color: #567">Drop pictures here.<br/>Or click to choose from device.</h5>
+            </form>
+        </div>
     </div>
-
-    <form id="dropzone" action="{% url 'slider:index' %}" method="post" class="dropzone" enctype="multipart/form-data"
-          style="display: none">
-        {{ form.author }}
-        {% csrf_token %}
-        <h5 class="dz-message" style="color: #567">Drop pictures here.<br/>Or click to choose from device.</h5>
-    </form>
 
     <div class="fixed-bottom mb-2 me-4 text-end">
         <a href="https://github.com/T-101/slider">Github</a>
