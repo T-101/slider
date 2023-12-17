@@ -22,10 +22,12 @@
     <form action="{% url 'slider:index' %}" method="post" class="dropzone" enctype="multipart/form-data"
           style="display: none">
         {{ form.author }}
-        {% comment %}<input type="hidden" name="author" maxlength="255" required="" id="id_author">{% endcomment %}
         {% csrf_token %}
-
     </form>
+
+    <div class="fixed-bottom mb-2 ms-4">
+        <a href="https://github.com/T-101/slider">Github</a>
+    </div>
 
     <script>
         const form = document.querySelector("form")
