@@ -19,7 +19,7 @@
         <label for="floatingInput">Author of images</label>
     </div>
 
-    <form action="{% url 'slider:index' %}" method="post" class="dropzone" enctype="multipart/form-data"
+    <form id="dropzone" action="{% url 'slider:index' %}" method="post" class="dropzone" enctype="multipart/form-data"
           style="display: none">
         {{ form.author }}
         {% csrf_token %}
@@ -30,6 +30,10 @@
     </div>
 
     <script>
+        Dropzone.options.dropzone = {
+            "acceptedFiles": "image/*"
+        }
+
         const form = document.querySelector("form")
         const author = document.querySelector("#id_author")
         const floatingInput = document.querySelector("#floatingInput")
@@ -39,7 +43,6 @@
             form.style.display = (e.target.value.length > 0) ? "" : "none"
             author.value = e.target.value
         })
-
     </script>
 
 {% endblock %}
