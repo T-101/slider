@@ -9,9 +9,6 @@
     <meta property="og:description" content='Sami "Reward" Vanhatalo'/>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
           integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
@@ -49,26 +46,32 @@
         scale: 50%;
         vertical-align: middle;
     }
-
 </style>
 <body>
-
-
 <div class="reveal">
     <div id="slides" class="slides">
     </div>
 </div>
 
-
 <script>
     const slides = document.querySelector("#slides")
 
     function getPictures() {
-        $.ajax({
-            type: "GET",
-            url: "{% url 'picture-list' %}",
-            success: refreshPictures
-        })
+        const xhr = new XMLHttpRequest()
+
+        xhr.open('GET', "{% url 'picture-list' %}", true)
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    refreshPictures(JSON.parse(xhr.responseText))
+                } else {
+                    console.error('Request failed with status:', xhr.status)
+                }
+            }
+        };
+
+        xhr.send()
     }
 
 
