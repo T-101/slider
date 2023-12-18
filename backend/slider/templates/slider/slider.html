@@ -83,13 +83,16 @@
             section.dataset.transitionSpeed = "slow"
             const i = document.createElement("i")
             i.className = "fa-solid fa-camera"
-            const text = document.createTextNode(obj.author)
             section.appendChild(i)
+            const text = document.createTextNode(obj.author)
             section.appendChild(text)
             slides.appendChild(section)
         })
 
-        if (Reveal.getState !== undefined) Reveal.sync()
+        if (Reveal.getState !== undefined) {
+            Reveal.sync()
+            Reveal.slide(0)
+        }
 
         if (Reveal.getState === undefined) {
             Reveal.initialize({
