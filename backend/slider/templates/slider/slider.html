@@ -84,11 +84,13 @@
             section.dataset.backgroundColor = "#123"
             section.dataset.transition = "fade"
             section.dataset.transitionSpeed = "slow"
-            const i = document.createElement("i")
-            i.className = "fa-solid fa-camera"
-            section.appendChild(i)
-            const text = document.createTextNode(obj.author)
-            section.appendChild(text)
+            if (obj.author !== ".") {
+                const i = document.createElement("i")
+                i.className = "fa-solid fa-camera"
+                section.appendChild(i)
+                const text = document.createTextNode(obj.author)
+                section.appendChild(text)
+            }
             slides.appendChild(section)
         })
 
