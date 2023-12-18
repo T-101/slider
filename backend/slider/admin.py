@@ -10,6 +10,7 @@ class PictureAdmin(admin.ModelAdmin):
     date_hierarchy = 'created'
     list_filter = ['created', 'visible']
     list_editable = ["visible"]
+    search_fields = ['author']
 
     readonly_fields = ['image_preview']
 
