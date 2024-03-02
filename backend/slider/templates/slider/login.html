@@ -1,0 +1,28 @@
+{% extends 'slider/base.html' %}
+{% block title %}
+    <title>Slider | Login</title>
+    <meta property="og:title" content='Slider | Login'/>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <div class="form-floating mb-3">
+                    <input type="text" name="username" class="form-control" id="id_username" placeholder="Username" required>
+                    <label for="id_username">Username</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" name="password" class="form-control" id="id_password" placeholder="Password" required>
+                    <label for="id_password">Password</label>
+                </div>
+            </div>
+        </div>
+
+        <input type="submit" class="btn btn-primary" name="submit" value="Sign in"/>
+    </form>
+
+
+
+{% endblock %}
