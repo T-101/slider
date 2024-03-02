@@ -1,7 +1,13 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
+from solo.admin import SingletonModelAdmin
 
-from .models import Picture
+from .models import Picture, Settings
+
+
+@admin.register(Settings)
+class SettingsAdmin(SingletonModelAdmin):
+    list_display = ['id', 'title', 'default_visibility']
 
 
 @admin.register(Picture)

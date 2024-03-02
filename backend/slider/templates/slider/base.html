@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     {% block title %}
-        <title>Sami "Reward" Vanhatalo</title>
-        <meta property="og:title" content='Sami "Reward" Vanhatalo'/>
+        <title>{{ settings.title }}</title>
+        <meta property="og:title" content='{{ settings.title }}'/>
     {% endblock %}
-    <meta property="og:description" content='Sami "Reward" Vanhatalo'/>
+    <meta property="og:description" content='{{ settings.description }}'/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"
@@ -23,9 +23,7 @@
 
 <nav class="navbar navbar-custom navbar-expand-md navbar-dark bg-primary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'slider:index' %}">
-            Sami "Reward" Vanhatalo
-        </a>
+        <a class="navbar-brand" href="{% url 'slider:index' %}">{{ settings.title }}</a>
     </div>
 </nav>
 

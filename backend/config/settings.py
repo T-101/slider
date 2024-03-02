@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_simple_plausible',
     'rest_framework',
+    'solo',
     # apps
     'slider',
 ]
@@ -104,6 +105,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'slider.context_processors.settings_context',
             ],
         },
     },
