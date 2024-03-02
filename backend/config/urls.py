@@ -26,7 +26,7 @@ v1router = routers.DefaultRouter() if settings.DEBUG else routers.SimpleRouter()
 v1router.registry.extend(v1entry_router.registry)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('djadmin/', admin.site.urls),
     path('api/v1/', include(v1router.urls)),
     path('', include('slider.urls'))
 ]
