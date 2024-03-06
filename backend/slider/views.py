@@ -4,6 +4,7 @@ from django.views.generic import FormView, TemplateView
 from slider.mixins import LoginRequiredMixin
 
 from slider.forms import PictureForm
+from slider.models import Settings
 
 
 class IndexView(FormView):
@@ -12,6 +13,8 @@ class IndexView(FormView):
     success_url = reverse_lazy("slider:index")
 
     def form_valid(self, form):
+        if not Settings.load().uploads_enabled:
+            return super().form_invalid(form)
         form.save()
         return super().form_valid(form)
 
