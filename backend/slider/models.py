@@ -16,6 +16,7 @@ class Settings(SingletonModel):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     default_visibility = models.BooleanField(default=True)
+    uploads_enabled = models.BooleanField(default=True)
 
     def set_cache(self):
         cache.set(self.__class__.__name__, self)
