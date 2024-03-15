@@ -21,7 +21,10 @@ class PictureAdmin(admin.ModelAdmin):
     readonly_fields = ['image_preview']
 
     def list_preview(self, obj):
-        return mark_safe(f'<img src="{obj.file.url}" width="100" />')
+        try:
+            return mark_safe(f'<img src="{obj.file.url}" width="100" />')
+        except ValueError:
+            return ""
 
     list_preview.short_description = 'Picture'
 
