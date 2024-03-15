@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_simple_plausible',
     'rest_framework',
+    'rest_framework.authtoken',
     'solo',
     # apps
     'slider',
@@ -156,6 +157,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
 
 STATIC_URL = env('STATIC_URL')
 STATIC_ROOT = env('STATIC_ROOT')
