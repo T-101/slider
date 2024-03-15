@@ -8,7 +8,7 @@ class PictureSerializer(ModelSerializer):
 
     class Meta:
         model = Picture
-        exclude = ['modified', 'file', 'visible']
+        exclude = ['modified', 'visible']
 
     def get_url(self, obj):
         return obj.file.url
