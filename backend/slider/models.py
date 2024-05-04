@@ -17,6 +17,7 @@ class Settings(SingletonModel):
     description = models.TextField(blank=True, null=True)
     default_visibility = models.BooleanField(default=True)
     uploads_enabled = models.BooleanField(default=True)
+    offline = models.BooleanField(default=False)
 
     def set_cache(self):
         cache.set(self.__class__.__name__, self)
