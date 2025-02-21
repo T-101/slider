@@ -1,15 +1,15 @@
 import os
 from io import BytesIO
 
-from PIL import Image
-from django.core.cache import cache
+from PIL import Image, ImageOps
+from solo.models import SingletonModel
 
+from django.core.cache import cache
 from django.core.files.base import ContentFile
 from django.db import models, IntegrityError
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 from django_extensions.db.models import TimeStampedModel
-from solo.models import SingletonModel
 
 
 class Settings(SingletonModel):
@@ -55,6 +55,7 @@ class Picture(TimeStampedModel):
             # Convert the image to WebP format
             if img.format != 'WEBP':
                 buffer = BytesIO()
+                img = ImageOps.exif_transpose(img)
                 img.save(buffer, format='WEBP')
                 self.file.save(
                     f"{os.path.splitext(self.file.name)[0]}.webp",
