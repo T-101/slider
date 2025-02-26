@@ -2,7 +2,7 @@
 Web app for image uploads and a slideshow
 ***
 Deployment:
-1. Create `.env` files in project root and `backend` directory and change settings where needed. There are examples provided.
+1. Create `.env` files in project root directory and change settings where needed. There are examples provided.
 2. `docker compose build`
 3. Uncomment preferred command in `docker-compose.yml`
 4. `docker compose up` and surf to localhost:8000
