@@ -43,7 +43,7 @@ if DEBUG:
 
 # Display Django Debug Toolbar in docker
 def show_toolbar(request):
-    return DEBUG
+    return env.bool('SHOW_DEBUG_TOOLBAR', False)
 
 
 DEBUG_TOOLBAR_CONFIG = {
