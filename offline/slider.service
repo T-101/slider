@@ -4,8 +4,8 @@ After=graphical.target
 Wants=graphical.target
 
 [Service]
-User=root
-Group=root
+User=1000
+Group=1000
 ExecStartPre=/bin/bash -c '/usr/bin/unclutter -idle 0 &'
 ExecStart=/bin/bash -c '/srv/slider/offline/slider.sh'
 Environment=DISPLAY=:0
