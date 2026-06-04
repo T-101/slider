@@ -2,7 +2,6 @@
 .env
 db.sqlite3
 media/
-static/
 *.pyc
 *.json
 
