@@ -1,6 +1,6 @@
 from django.urls import path
 
-from slider.views import IndexView, SliderView, LoginView, AdminView
+from slider.views import IndexView, SliderView, LoginView, AdminView, SetLanguageView
 
 app_name = "slider"
 
@@ -9,4 +9,5 @@ urlpatterns = [
     path("slider/", SliderView.as_view(), name="slider"),
     path("login/", LoginView.as_view(), name="login"),
     path("admin/", AdminView.as_view(), name="admin"),
+    path('language/<str:language>/', SetLanguageView.as_view(), name="set-language"),
 ]

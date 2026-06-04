@@ -21,4 +21,4 @@ COPY --from=builder /install /usr/local
 
 COPY .bashrc /root/
 
-RUN apk add --no-cache nano bash htop
+RUN apk add --no-cache nano bash htop gettext

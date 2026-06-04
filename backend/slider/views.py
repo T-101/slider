@@ -1,7 +1,12 @@
 from django.contrib.auth.views import LoginView as DjangoLoginView
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import FormView, TemplateView
+from django.utils import translation
+from django.utils.http import url_has_allowed_host_and_scheme
+from django.utils.translation import check_for_language
+from django.views.generic import FormView, TemplateView, View
 from slider.mixins import LoginRequiredMixin
+from django.conf import settings
 
 from slider.forms import PictureForm
 from slider.models import Settings
@@ -30,3 +35,20 @@ class LoginView(DjangoLoginView):
 
 class AdminView(LoginRequiredMixin, TemplateView):
     template_name = "slider/admin.html"
+
+
+class SetLanguageView(View):
+    def get(self, request, *args, **kwargs):
+        # Copied from django.views.i18n.set_language
+
+        lang_code = kwargs.get("language")
+
+        next_url = request.META.get('HTTP_REFERER')
+        if not url_has_allowed_host_and_scheme(next_url, settings.ALLOWED_HOSTS, require_https=not settings.DEBUG):
+            next_url = '/'
+        response = HttpResponseRedirect(next_url)
+        if lang_code and check_for_language(lang_code):
+            translation.activate(lang_code.lower())
+            max_age = 365 * 24 * 60 * 60  # One year
+            response.set_cookie(key=settings.LANGUAGE_COOKIE_NAME, value=lang_code.lower(), max_age=max_age)
+        return response

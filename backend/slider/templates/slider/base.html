@@ -1,10 +1,10 @@
-<!DOCTYPE html>{% load static %}{% load plausible %}
+<!DOCTYPE html>{% load static i18n plausible %}
 <html lang="en" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     {% block title %}
-        <title>{{ settings.title }}</title>
-        <meta property="og:title" content='{{ settings.title }}'/>
+    <title>{{ settings.title }}</title>
+    <meta property="og:title" content='{{ settings.title }}'/>
     {% endblock %}
     <meta property="og:description" content='{{ settings.description }}'/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,16 +13,17 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'slider16.png' %}">
     <link rel="manifest" href="{% static 'site.webmanifest' %}">
     {% if settings.offline %}
-        <script src="{% static 'slider/bootstrap.5.3.3.bundle.min.js' %}"></script>
-        <link rel="stylesheet" href="{% static 'slider/bootstrap.5.3.3.min.css' %}"/>
+    <script src="{% static 'slider/bootstrap.5.3.3.bundle.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'slider/bootstrap.5.3.3.min.css' %}"/>
     {% else %}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"
-                integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg=="
-                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
-              integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
-              crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"
+            integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+          integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     {% endif %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}"/>
     {% block extrahead %}
     {% endblock %}
 </head>
@@ -31,6 +32,31 @@
 <nav class="navbar navbar-custom navbar-expand-md navbar-dark bg-primary">
     <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'slider:index' %}">{{ settings.title }}</a>
+        <ul class="navbar-nav ms-auto me-2">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                   aria-haspopup="true" aria-expanded="false">
+                    {% get_current_language as LANG %}
+                    {% with 'images/'|add:LANG|add:".svg" as image_static %}
+                    <img src="{% static image_static %}" alt="" class="flag"/>
+                    {% endwith %}
+                </a>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <div class="dropdown-item">
+                        <a class="text-white" href="{% url 'slider:set-language' 'fi' %}">
+                            <img src="{% static 'images/fi.svg' %}" alt="" class="flag flag-margin"/>
+                            Suomi
+                        </a>
+                    </div>
+                    <div class="dropdown-item">
+                        <a class="text-white" href="{% url 'slider:set-language' 'en' %}">
+                            <img src="{% static 'images/en.svg' %}" alt="" class="flag flag-margin"/>
+                            English
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div>
 </nav>
 
@@ -40,7 +66,7 @@
 </div>
 
 {% if not settings.offline %}
-    {% plausible %}
+{% plausible %}
 {% endif %}
 
 </body>
