@@ -10,5 +10,5 @@ services:
     volumes:
       - ./backend:/app
     ports:
-      - "127.0.0.1:${CONTAINER_PORT}:${CONTAINER_PORT}"
+      - "${CONTAINER_PORT}:${CONTAINER_PORT}"
     restart: unless-stopped
