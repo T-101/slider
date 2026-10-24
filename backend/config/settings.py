@@ -34,14 +34,14 @@ DEBUG = env.bool('DEBUG')
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')
 
-if DEBUG:
-    import socket
 
-    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
-    INTERNAL_IPS = [ip[:-1] + '1' for ip in ips] + ['127.0.0.1', '10.0.2.2']
+# Display Django Debug Toolbar in docker
+def show_toolbar():
+    return env.bool('SHOW_DEBUG_TOOLBAR', False)
+
 
 DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK': lambda _: DEBUG
+    'SHOW_TOOLBAR_CALLBACK': lambda _: show_toolbar()
 }
 
 # Application definition
@@ -63,8 +63,8 @@ INSTALLED_APPS = [
     'slider',
 ]
 
-if DEBUG:
-    # inject DDT only when DEBUG = True, to reduce overhead
+if show_toolbar():
+    # inject DDT only when SHOW_DEBUG_TOOLBAR = True, to reduce overhead
     for i, item in enumerate(INSTALLED_APPS):
         if item == "django.contrib.staticfiles":
             INSTALLED_APPS.insert(i + 1, "debug_toolbar")
@@ -81,8 +81,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-if DEBUG:
-    # inject DDT only when DEBUG = True, to reduce overhead
+if show_toolbar():
+    # inject DDT only when SHOW_DEBUG_TOOLBAR = True, to reduce overhead
     for i, item in enumerate(MIDDLEWARE):
         if item == "django.middleware.common.CommonMiddleware":
             MIDDLEWARE.insert(i + 1, "debug_toolbar.middleware.DebugToolbarMiddleware")

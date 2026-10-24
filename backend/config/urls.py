@@ -18,6 +18,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from config.settings import show_toolbar
+
 from rest_framework import routers
 
 from slider.api.v1.routers import router as v1entry_router
@@ -31,7 +33,7 @@ urlpatterns = [
     path('', include('slider.urls'))
 ]
 
-if settings.DEBUG:
+if show_toolbar():
     import debug_toolbar
 
     urlpatterns = [path('__debug__/', include(debug_toolbar.urls))] + urlpatterns
