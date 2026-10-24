@@ -40,14 +40,8 @@ if DEBUG:
     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
     INTERNAL_IPS = [ip[:-1] + '1' for ip in ips] + ['127.0.0.1', '10.0.2.2']
 
-
-# Display Django Debug Toolbar in docker
-def show_toolbar(request):
-    return env.bool('SHOW_DEBUG_TOOLBAR', False)
-
-
 DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK': 'config.settings.show_toolbar',
+    'SHOW_TOOLBAR_CALLBACK': lambda _: DEBUG
 }
 
 # Application definition
