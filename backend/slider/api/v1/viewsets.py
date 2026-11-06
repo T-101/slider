@@ -1,8 +1,8 @@
-from rest_framework import viewsets
+from rest_framework import mixins, viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
 from rest_framework.response import Response
 
-from slider.api.v1.serializers import PictureSerializer
+from slider.api.v1.serializers import PictureSerializer, PictureVisibilitySerializer
 from slider.models import Picture, Settings
 
 
@@ -12,6 +12,18 @@ class PictureViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Picture.objects.filter(visible=True)
+
+
+class PictureVisibilityViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
+    serializer_class = PictureVisibilitySerializer
+    permission_classes = [IsAdminUser]
+
+    def get_queryset(self):
+        queryset = Picture.objects.order_by('-created')
+        visible = self.request.query_params.get('visible')
+        if visible is not None:
+            queryset = queryset.filter(visible=visible.lower() == 'true')
+        return queryset
 
 
 class UploadToggleViewSet(viewsets.ViewSet):

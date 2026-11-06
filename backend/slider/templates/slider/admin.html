@@ -1,4 +1,5 @@
 {% extends 'slider/base.html' %}
+{% load i18n %}
 
 {% block title %}
 {% endblock %}
@@ -18,16 +19,26 @@
 {% endblock %}
 
 {% block content %}
-    <h3>Picture Admin</h3>
+    <h3>{% translate "Picture Admin" %}</h3>
     <div class="row mb-4">
         <div class="col">
             <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="uploadEnabledSwitch">
                 <label class="form-check-label" for="uploadEnabledSwitch" id="uploadEnabledLabel">
-                    Uploads enabled</label>
+                    {% translate "Uploads enabled" %}</label>
             </div>
         </div>
     </div>
+
+    <div class="btn-group mb-3" role="group" aria-label="{% translate "Picture visibility" %}">
+        <input type="radio" class="btn-check" name="visibilityFilter" id="filterHidden" value="false" checked>
+        <label class="btn btn-outline-primary" for="filterHidden">{% translate "Hidden" %}</label>
+        <input type="radio" class="btn-check" name="visibilityFilter" id="filterVisible" value="true">
+        <label class="btn btn-outline-primary" for="filterVisible">{% translate "Visible" %}</label>
+    </div>
+
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3 mb-4" id="pictureGrid"></div>
+    <p class="text-secondary d-none" id="pictureEmpty">{% translate "No pictures." %}</p>
 
     <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
 
@@ -75,6 +86,87 @@
                 uploadEnabledSwitch.checked = j.uploads_enabled
             })
         })
+
+        {% translate "Show" as showLabel %}{% translate "Hide" as hideLabel %}
+        const pictureGrid = document.getElementById("pictureGrid"),
+            pictureEmpty = document.getElementById("pictureEmpty"),
+            pictureListUrl = "{% url 'picture_visibility-list' %}",
+            showLabel = "{{ showLabel|escapejs }}",
+            hideLabel = "{{ hideLabel|escapejs }}"
+        let showingVisible = false
+
+        function updateEmpty() {
+            pictureEmpty.classList.toggle("d-none", pictureGrid.children.length > 0)
+        }
+
+        function setVisibility(id, visible) {
+            return fetch(`${pictureListUrl}${id}/`, {
+                method: "PATCH",
+                body: JSON.stringify({visible: visible}),
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                }
+            })
+        }
+
+        function renderPicture(picture) {
+            const col = document.createElement("div"),
+                card = document.createElement("div"),
+                img = document.createElement("img"),
+                body = document.createElement("div"),
+                author = document.createElement("span"),
+                button = document.createElement("button")
+
+            col.className = "col"
+            card.className = "card h-100"
+            img.className = "card-img-top"
+            img.src = picture.url
+            img.alt = picture.author
+            img.loading = "lazy"
+            body.className = "card-body d-flex justify-content-between align-items-center"
+            author.className = "text-truncate me-2"
+            author.textContent = picture.author
+            button.type = "button"
+            button.className = picture.visible ? "btn btn-sm btn-outline-danger" : "btn btn-sm btn-success"
+            button.textContent = picture.visible ? hideLabel : showLabel
+
+            button.addEventListener("click", () => {
+                button.disabled = true
+                setVisibility(picture.id, !picture.visible).then(res => {
+                    if (res.ok) {
+                        col.remove()
+                        updateEmpty()
+                    } else {
+                        button.disabled = false
+                    }
+                })
+            })
+
+            body.append(author, button)
+            card.append(img, body)
+            col.append(card)
+            return col
+        }
+
+        function loadPictures() {
+            fetch(`${pictureListUrl}?visible=${showingVisible}`, {credentials: "same-origin"})
+                .then(res => res.json())
+                .then(pictures => {
+                    pictureGrid.replaceChildren(...pictures.map(renderPicture))
+                    updateEmpty()
+                })
+        }
+
+        document.querySelectorAll("input[name=visibilityFilter]").forEach(radio => {
+            radio.addEventListener("change", (e) => {
+                showingVisible = e.target.value === "true"
+                loadPictures()
+            })
+        })
+
+        loadPictures()
 
     </script>
 
