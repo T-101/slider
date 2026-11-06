@@ -12,6 +12,6 @@ It's a Django, so always helpful to run the usual commands to apply database mig
 2. `python manage.py migrate`
 3. `python manage.py createsuperuser`
 
-Translations (`.mo` files) are not committed. The compose commands compile them on startup; to do it manually, run `python manage.py compilemessages`.
+Translations (`.mo` files) are not committed. The Docker image compiles them on container startup; to do it manually, run `python manage.py compilemessages`.
 
 Upload view is at localhost:8000 and slideshow is at localhost:8000/slider/

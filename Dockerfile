@@ -22,3 +22,6 @@ COPY --from=builder /install /usr/local
 COPY .bashrc /root/
 
 RUN apk add --no-cache nano bash htop gettext
+
+# Compile translations on container start (code is mounted at runtime), then run the given command
+ENTRYPOINT ["sh", "-c", "python manage.py compilemessages && exec \"$@\"", "--"]
