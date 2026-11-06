@@ -56,3 +56,35 @@ msgstr "Lataus alkaa automaattisesti."
 #: slider/templates/slider/index.html:76
 msgid "Upload complete"
 msgstr "Lataus valmis"
+
+#: slider/templates/slider/admin.html:22
+msgid "Picture Admin"
+msgstr "Kuvien hallinta"
+
+#: slider/templates/slider/admin.html:28
+msgid "Uploads enabled"
+msgstr "Kuvien lataus käytössä"
+
+#: slider/templates/slider/admin.html:33
+msgid "Picture visibility"
+msgstr "Kuvien näkyvyys"
+
+#: slider/templates/slider/admin.html:35
+msgid "Hidden"
+msgstr "Piilotetut"
+
+#: slider/templates/slider/admin.html:37
+msgid "Visible"
+msgstr "Näkyvät"
+
+#: slider/templates/slider/admin.html:41
+msgid "No pictures."
+msgstr "Ei kuvia."
+
+#: slider/templates/slider/admin.html:90
+msgid "Show"
+msgstr "Näytä"
+
+#: slider/templates/slider/admin.html:90
+msgid "Hide"
+msgstr "Piilota"
